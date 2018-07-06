@@ -42,10 +42,6 @@ app.get('/history', isLoggedIn , (req, res, next) => {
     });
     });
 
-app.get('/orders', isLoggedIn, (req, res, next) => {
-    res.render('orders');
-});
-
 app.get('/inventory', isLoggedIn, (req, res, next) => {
     ProductAndMedi.find({}).populate('product_id').populate('inventory_product_id').exec((err, pros) => {
         res.render('inventory', {pros: pros});

@@ -1,1 +1,168 @@
-<h1>Add Deistributor</h1>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Distributor form</title>
+	
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,700,700i" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="assets/css/distributor.css">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+
+	
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="/">Medicento</a>
+</nav>
+	<header>
+	    <div>
+	        <h1>Become A Distributor</h1>
+	        <p>We're actively seeking disributor relationships for the partial or complete line of medicine supplies</p>
+	        
+	    </div>
+	</header>
+	<section>
+	<h2 id='join'>Join with us</h2>
+	<div class="row">
+        <div id='error'></div>    
+	    <div class='form '>
+            <form role="form" method="post" action="#" >
+                     <div class="box-body">
+                        <div class="form-group row col-xs-12">
+                             <label class='col-form-label col-md-3' class="col-md-3 col-form-label" for="shopname">Shop Name</label>
+                             <input type="text" name="shopname" class="form-control col-md-9" required id="shopname" required>
+                         </div>
+                            <div class="form-group row col-xs-12">
+                              <label class='col-form-label col-md-3' for="owner">Owner</label>
+                                <input type="text" name="owner" class="form-control col-md-9" id="owner" required>
+                            </div>
+                            <div class="form-group row col-xs-12">
+                              <label class='col-form-label col-md-3' for="phno">Phone Number</label>
+                                <input type="text" name="phno" class="form-control col-md-9" id="phno" required>
+                            </div>
+                            <div class="form-group row col-xs-12">
+                              <label class='col-form-label col-md-3' for="email">Email</label>
+                                <input type="email" name="email" class="form-control col-md-9" id="email" required>
+                            </div>
+                            <div class="form-group row col-xs-12">
+                              <label class='col-form-label col-md-3' for="gstNo">GST Number</label>
+                                <input type="text" name="gstNo" class="form-control col-md-9" id="gstNo" required>
+                            </div>
+                            <div class="form-group row col-xs-12">
+                              <label class='col-form-label col-md-3' for="dlNo">DL Number</label>
+                                <input type="text" name="dlNo" class="form-control col-md-9" id="dlNo" required>
+                            </div>
+                             <div class="form-group row ">
+                                <label class='col-form-label col-md-3'>Address</label>
+                                <input class='form-control col-md-9' id="autocomplete" placeholder="Enter your address" onFocus="geolocate" type="text">	
+                            </div>
+                            <div class="form-group row">
+                                <label class='col-form-label col-md-3'>Address line1</label>
+                                <input class="form-control col-md-9" name="address_1" placeholder="address 1" required>
+                            </div>
+                            <div class='form-group row'>
+                                <label class='col-form-label col-md-3'>Address line2</label>
+                                <input class="form-control col-md-9" name='address_2' placeholder="address 2">
+                            </div>
+
+                            <div class="form-group row">
+                               <label class='col-form-label col-md-3'>Area</label>
+                                <input class="form-control col-md-9" placeholder="Area" id="street_number" name="area"  required>
+                            </div>
+                            <div class="form-group row">
+                                <label class='col-form-label col-md-3'>City</label>
+                                 <input class="form-control col-md-9" id="locality" placeholder="city" name="city"  required>
+                            </div>
+
+                            <div class="form-group row">
+                                   <label class='col-form-label col-md-3'>State</label>
+                                    <input class="form-control col-md-4" id="administrative_area_level_1" name="state" placeholder="state" required>
+                                    <label class='col-form-label col-md-2'>Pincode</label>
+                                    <input class="form-control col-md-3"  id="postal_code" placeholder="pincode" name="pincode"  required>
+                             </div>
+                            <div class="form-group row col-md-12">
+                                <input class="btn" type="submit" name="submit" value="Submit">
+                            </div>
+                        </div>
+                  </form>
+        </div>
+
+	</div>
+	</section>
+
+    <script>
+      // This example displays an address form, using the autocomplete feature
+      // of the Google Places API to help users fill in the information.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var placeSearch, autocomplete;
+      var componentForm = {
+        street_number: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'long_name',
+        postal_code: 'short_name'
+      };
+
+      function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+      }
+
+      function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+          document.getElementById(component).value = '';
+          document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            document.getElementById(addressType).value = val;
+          }
+        }
+      }
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+    </script>
+    <script src="assets/js/validations.js"></script>
+    <script src="assets/js/functions.js"></script>
+   <!-- -----for google apis------------   -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrBz_8OHgziYwkt3eQeOg_8I_5B6GdoaI&libraries=places&callback=initAutocomplete"
+        async defer></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+</body>
+</html>

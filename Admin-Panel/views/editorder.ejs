@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Distributor form</title>
+	
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,700,700i" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="assets/css/distributor.css">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+
+	
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="/">Medicento</a>
+</nav>
+	<header>
+	    <div>
+	        <h1>Become A Distributor</h1>
+	        <p>We're actively seeking disributor relationships for the partial or complete line of medicine supplies</p>
+	    </div>
+	</header>
+<form action="/editOrder/<%= order._id %>" method="POST">
+	<div class="form-group row col-xs-12">
+        <label class='col-form-label col-md-3' for="owner">Owner</label>
+            <input type="text" name="owner" class="form-control col-md-9" id="owner" required>
+    </div>
+</form>
+</body>
+</html>

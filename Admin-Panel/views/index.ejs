@@ -60,14 +60,13 @@
                   <div class="title">Recent Orders</div>
                 </div>
                 <div class="panel-body table-responsive">
-                  <table class="table table-striped table-borderless">
+                  <table id="myTable" class="table table-striped table-borderless">
                     <thead>
                       <tr>
                         <th style="width:40%;">Product</th>
                         <th class="number">Price</th>
                         <th style="width:20%;">Date</th>
                         <th style="width:20%;">State</th>
-                        <th style="width:5%;" class="actions"></th>
                       </tr>
                     </thead>
 					<% orders.forEach(function(order) { %>
@@ -83,7 +82,6 @@
 						<% } else { %>
 						<td class="text-danger"><%= order.status %></td>
 						<% } %>
-                        <td class="actions"><a href="#" class="icon"><i class="mdi mdi-plus-circle-o"></i></a></td>
                       </tr>
 					  <% }); %>
                     </tbody>
@@ -162,8 +160,6 @@
         //initialize the javascript
         App.init();
         App.dashboard();
-
-      
       });
 
       function sparklines(){
