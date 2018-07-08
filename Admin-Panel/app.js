@@ -14,8 +14,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const moment = require('moment');
-const Order1 = require('./models/SalesOrder1');
-const OrderItem1 = require('./models/SalesOrderItem1');
 const MONGODB_URI = "mongodb://GiteshMedi:shastri1@ds263590.mlab.com:63590/medicento";
 mongoose.connect(MONGODB_URI);
 mongoose.Promise = global.Promise;
@@ -123,7 +121,8 @@ app.use('/', (req, res, next) => {
         orders = orders.slice(-6);
         User.count({}, (err, c) => {
             Order.count({ status: 'completed' }, (err, com) => {
-                Order.find({ status: 'active' }).populate('pharmacy_id').exec((err, pendingOrders) => {
+                Order.find({ status: 'active' }).populate('pharmacy_id').populate('order_items').exec((err, pendingOrders) => {
+                    console.log(pendingOrders[0]);
                     res.render('index', { count: c, orders, pendingOrders, order_completed: com, order_pending: pendingOrders.length});
                 });
             });
