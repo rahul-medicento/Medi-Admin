@@ -1,4 +1,34 @@
 <% include header.ejs %>
+      <!-- left sidebar -->
+      <div class="be-left-sidebar" style="position:fixed;">
+          <div class="left-sidebar-wrapper"><a href="#" class="left-sidebar-toggle">Orders</a>
+            <div class="left-sidebar-spacer">
+              <div class="left-sidebar-scroll">
+                <div class="left-sidebar-content">
+                  <ul class="sidebar-elements">
+                    <li class="divider">Menu</li>
+                      <li ><a href="/"><i class="icon mdi mdi-home"></i><span>Dash Board</span></a>
+                      </li>
+                       <li><a href="/history"><i class="icon mdi mdi-time-restore"></i><span>History</span></a>
+                       </li>
+                      <li class="active"><a href="/inventory"><i class="icon mdi mdi-local-grocery-store"></i><span>Inventory</span></a>
+                       </li>
+                       <li class="parent"><a href="#"><i class="icon mdi mdi-accounts-add"></i><span>Add Members</span></a>
+                         <ul class="sub-menu"> 
+                           <li><a href="/addRetailer">Add Retailer</a>
+                           </li>
+                           <li><a href='/addDistributor'>Add Distrbutor</a>
+                           </li>
+                           <li><a href="/addSalesPerson">Add Sales Person</a>
+                           </li>
+                         </ul>  
+                       </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+         </div>   
+        </div>
       <div class="be-content">
         <!-- table -->
         <div class="page-head">

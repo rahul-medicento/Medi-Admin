@@ -13,6 +13,7 @@ const profile = require('./models/profile');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const moment = require('moment');
 const MONGODB_URI = "mongodb://GiteshMedi:shastri1@ds263590.mlab.com:63590/medicento";
 mongoose.connect(MONGODB_URI);
 mongoose.Promise = global.Promise;
@@ -30,6 +31,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use('/assets', express.static('assets'));
+app.locals.moment = moment;
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
@@ -115,11 +117,11 @@ app.get('/forgot-password', (req, res, next) => {
 app.use('/', (req, res, next) => {
     orders = [];
     Order.find({}).populate('pharmacy_id').exec((err, orders) => {
-        orders = orders.slice(orders.length - 6);
+        orders = orders.slice(-6);
         User.count({}, (err, c) => {
             Order.count({ status: 'completed' }, (err, com) => {
-                Order.count({ status: 'pending' }, (err, pen) => {
-                    res.render('index', { count: c, orders: orders, order_completed: com, order_pending: pen });
+                Order.find({ status: 'active' }).populate('pharmacy_id').exec((err, pendingOrders) => {
+                    res.render('index', { count: c, orders, pendingOrders, order_completed: com, order_pending: pendingOrders.length});
                 });
             });
         });

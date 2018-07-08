@@ -1,4 +1,34 @@
 <% include header.ejs %>
+      <!-- left sidebar -->
+      <div class="be-left-sidebar" style="position:fixed;">
+          <div class="left-sidebar-wrapper"><a href="#" class="left-sidebar-toggle">Orders</a>
+            <div class="left-sidebar-spacer">
+              <div class="left-sidebar-scroll">
+                <div class="left-sidebar-content">
+                  <ul class="sidebar-elements">
+                    <li class="divider">Menu</li>
+                      <li ><a href="/"><i class="icon mdi mdi-home"></i><span>Dash Board</span></a>
+                      </li>
+                       <li class="active"><a href="/history"><i class="icon mdi mdi-time-restore"></i><span>History</span></a>
+                       </li>
+                      <li><a href="/inventory"><i class="icon mdi mdi-local-grocery-store"></i><span>Inventory</span></a>
+                       </li>
+                       <li class="parent"><a href="#"><i class="icon mdi mdi-accounts-add"></i><span>Add Members</span></a>
+                         <ul class="sub-menu"> 
+                           <li><a href="/addRetailer">Add Retailer</a>
+                           </li>
+                           <li><a href='/addDistributor'>Add Distrbutor</a>
+                           </li>
+                           <li><a href="/addSalesPerson">Add Sales Person</a>
+                           </li>
+                         </ul>  
+                       </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+         </div>   
+        </div>
      <div class="be-content">
         <!-- table -->
         <div class="page-head">
@@ -26,8 +56,12 @@
 					<% orders.forEach(function(order, i) { %>
                       <tr>
                           <td><%= i %></td>
-                          <td><%= order.pharmacy_id.pharma_name %></td>
-                          <td><%= order.created_at %></td>
+                          <td>
+                            <span style="cursor: pointer;" data-toggle="modal" data-target="#<%= order._id %>" class="text-primary">
+                                <%= order.pharmacy_id.pharma_name %>
+                            </span>
+                          </td>
+                          <td><%= moment(order.created_at).format('ddd, MMMM Do YYYY, hh:mm:ss a') %></td>
                           <td class="center">Rs. <%= order.grand_total %></td>
 							<% if(order.status == 'completed') { %>
                         <td class="text-success"><%= order.status %></td>
@@ -47,7 +81,113 @@
           </div>
 
         <!-- table ends -->
-
+        <!-- Invoice popup screen  (give the dyanamic id)----------- -->
+        <% orders.forEach( (order, i) => { %>
+        <div id="<%= order._id %>" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-primary">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
+                  <h3 class="modal-title">Medicento</h3>
+                </div>
+                <div class="modal-body">
+                  <section>
+                  
+                  <!--------info row---------  -->
+                  <div class="row invoice-info">  
+                    <div class="col-sm-6 invoice-col">
+                      From
+                      <address> 
+                          <strong><%= order.pharmacy_id.pharma_name %></strong><br>    
+                        Kormangala, 1st Block <br>  
+                        Bangalore <br>  
+                        Phone: 8639133577 <br>
+                        Email: murali@gmail.com 
+                      </address>
+                    </div>
+                    <!-- column -->
+                    <div class="col-sm-6">  
+                      <b>Invoice #058855</b>
+                      <br>
+                      <b>Order ID:</b> <%= order._id %><br>
+                      <b>Order Date:</b><%= moment(order.created_at).format('ddd, MMMM Do YYYY') %><br>
+                  </div>
+                  </div>
+                  
+                  <!--------- Products table ------------ -->
+                  <div class="row"> 
+                    <div class="col-xs-12 table-responsive">
+                      <table class="table  table-borderless"> 
+                        <thead> 
+                          <tr>  
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Cost</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Paracetmol</td>
+                            <td>6</td>
+                            <td>Rs. 125</td>
+                          </tr>
+                          <tr>
+                            <td>Crocin</td>
+                            <td>4</td>
+                            <td>Rs. 180</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>  
+                  <!-- Amount balance details -->
+                  <div class="row">
+                    <div class="col-xs-offset-6 col-xs-6">
+                        <p class="lead">Amount Due </p>
+                        <div class="table-responsive">
+                          <table class="table">
+                            <tr>
+                              <th style="width:50%">Subtotal:</th>
+                              <td>Rs.</td>
+                            </tr>
+                            <tr>
+                              <th>GST (5%)</th>
+                              <td>Rs.</td>
+                            </tr>
+                            <tr>
+                              <th>Total:</th>
+                              <td>Rs. <%= order.grand_total %></td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                  </div>  
+                  <!-- amount detail row ends -->
+                  </section>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                  <!-- --------modal footer print -------- -->                
+                  <div class="col-md-6">
+                    <br>
+                    <button class="btn btn-lg btn-default text-primary xs-ml-20 xs-mr-50">
+                      <span class="mdi lead xs-mb-0 mdi-print xs-mr-20"></span>Print</button>
+                  </div>
+                  <div class="col-md-6">
+                  <!-- ---------modal footer download ------------- -->
+                    <p class="text-center text-bold">Download Invoice</p>
+                    <button class="btn  btn-default pull-right xs-ml-20 xs-mr-40 xs-pl-20 xs-pr-20"> 
+                      <span  class="mdi mdi-download"></span> PDF</button>
+                    <button class="btn btn-space btn-default pull-right xs-pl-20 xs-pr-20">
+                      <span  class="mdi mdi-download"></span> CSV</button>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <!------------------------ Invoice ends-------------------- -->
+          <% })%>
         
   </div>
 </div>
