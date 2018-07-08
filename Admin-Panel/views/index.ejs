@@ -81,8 +81,8 @@
                   <div class="tools"><span class="icon mdi mdi-download"></span><span class="icon mdi mdi-more-vert"></span></div>
                   <div class="title">Active Orders</div>
                 </div>
-                <div class="panel-body table-responsive">
-                  <table class="table table-striped table-borderless">
+                <div class="panel-body">
+                  <table id="table1" class="table table-striped table-hover table-fw-widget">
                     <thead>
                       <tr>
                         <th style="width:20%;">Order Id</th>
@@ -341,6 +341,14 @@
     <script src="assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
     <script src="assets/js/main.js" type="text/javascript"></script>
     <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/dataTables.buttons.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/buttons.flash.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/buttons.print.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/buttons.colVis.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/buttons.bootstrap.js" type="text/javascript"></script>
+    <script src="assets/js/app-tables-datatables.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-flot/jquery.flot.pie.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-flot/jquery.flot.resize.js" type="text/javascript"></script>
@@ -354,6 +362,7 @@
       $(document).ready(function(){
         //initialize the javascript
         App.init();
+        $('#table1').DataTable();
         App.dashboard();
       });
 
