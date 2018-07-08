@@ -73,7 +73,7 @@
                     <tbody class="no-border-x">
                       <tr>
                         <td><%= order.pharmacy_id.pharma_name %></td>
-                        <td class="number"><%= order.grand_total %></td>
+                        <td class="number">Rs. <%= order.grand_total %></td>
                         <td><%= order.created_at %></td>
 						<% if(order.status == 'completed') { %>
                         <td class="text-success"><%= order.status %></td>

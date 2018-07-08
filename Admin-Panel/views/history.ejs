@@ -28,7 +28,7 @@
                           <td><%= i %></td>
                           <td><%= order.pharmacy_id.pharma_name %></td>
                           <td><%= order.created_at %></td>
-                          <td class="center"><%= order.grand_total %>/-</td>
+                          <td class="center">Rs. <%= order.grand_total %></td>
 							<% if(order.status == 'completed') { %>
                         <td class="text-success"><%= order.status %></td>
 						<% } else if(order.status == 'active') { %>
