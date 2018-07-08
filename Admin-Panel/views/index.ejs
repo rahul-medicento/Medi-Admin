@@ -127,8 +127,7 @@
                       From
                       <address> 
                         <strong><%= order.pharmacy_id.pharma_name %></strong><br>  
-                        Kormangala, 1st Block <br>  
-                        Bangalore <br>  
+                        <%= order.pharmacy_id.pharma_address %>
                         Phone: 8639133577 <br>
                         Email: murali@gmail.com 
                       </address>
@@ -137,7 +136,7 @@
                     <div class="col-sm-6">  
                       <b>Invoice #058855</b>
                       <br>
-                      <b>Order ID:</b> <%= order._id %>br>
+                      <b>Order ID:</b> <%= order._id %>
                       <b>Order Date:</b><%= moment(order.created_at).format('ddd, MMMM Do YYYY') %><br>
                   </div>
                   </div>
@@ -154,21 +153,13 @@
                           </tr>
                         </thead>
                         <tbody>
+                        <% order.order_items.forEach((order_item) => { %>
                           <tr>
-                            <td>Crocin</td>
-                            <td>10</td>
-                            <td>Rs. 65</td>
+                            <td><%= order_item.medicento_name %></td>
+                            <td><%= order_item.quantity %></td>
+                            <td>Rs. <%= order_item.total_amount %></td>
                           </tr>
-                          <tr>
-                            <td>Paracetmol</td>
-                            <td>6</td>
-                            <td>Rs. 125</td>
-                          </tr>
-                          <tr>
-                            <td>Diclogen</td>
-                            <td>4</td>
-                            <td>Rs. 180</td>
-                          </tr>
+                        <% }) %>
                         </tbody>
                       </table>
                     </div>
