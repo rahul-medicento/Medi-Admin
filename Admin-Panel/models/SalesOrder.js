@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 
 const SalesOrderSchema = mongoose.Schema({
-	sales_order_id: mongoose.Schema.Types.ObjectId,
 	parent_order_id: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'SalesOrder'
 	},
+	order_items: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+        	ref: 'SalesOrderItems'
+		}
+	],
 	pharmacy_id: {
 		type: mongoose.Schema.Types.ObjectId,
         ref: 'Pharmacy',
