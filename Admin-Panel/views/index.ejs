@@ -67,7 +67,9 @@
                           <div id="spark4" class="chart sparkline"></div>
                           <div class="data-info">
                             <div class="desc">Orders Active</div>
-                            <div class="value"><span class="indicator indicator-negative mdi mdi-chevron-down"></span><span data-toggle="counter" data-end="<%= order_pending %>" class="number"></span>
+                            <div class="value">
+                              <span class="indicator indicator-negative mdi mdi-chevron-down"></span>
+                              <span data-toggle="counter" data-end="<%= order_active %>" class="number"></span>
                             </div>
                           </div>
                         </div>
@@ -75,25 +77,28 @@
           </div>
           <!-- Orders active -->
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-sm-12">
               <div class="panel panel-default panel-table">
-                <div class="panel-heading"> 
-                  <div class="tools"><span class="icon mdi mdi-download"></span><span class="icon mdi mdi-more-vert"></span></div>
-                  <div class="title">Active Orders</div>
+                <div class="panel-heading">
+                    Active Orders
+                  <div class="tools">
+                    <span class="icon mdi mdi-download"></span>
+                    <span class="icon mdi mdi-more-vert"></span>
+                  </div>
                 </div>
-                <div class="panel-body table-responsive">
-                  <table class="table table-striped table-borderless">
+                <div class="panel-body">
+                  <table id="table1" class="table table-striped table-hover table-fw-widget">
                     <thead>
                       <tr>
-                        <th style="width:20%;">Order Id</th>
-                        <th style="width:20%;">Retailer</th>
-                        <th style="width: 20%;">Amount</th>
-                        <th style="width:20%;">Date</th>
-                        <th style="width:20%;"> Details</th>
+                        <th>Order Id</th>
+                        <th>Retailer</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>  Details</th>
                       </tr>
                     </thead>
-                    <tbody class="no-border-x">
-                      <% pendingOrders.forEach(function(order) {%>
+                    <tbody>
+                      <% activeOrders.forEach(function(order) {%>
                       <tr>
                         <td><%= order._id %></td>
                         <td><%= order.pharmacy_id.pharma_name %></td>
@@ -110,7 +115,7 @@
             </div>
         </div>
         <!---------------- Delivery Details popup screen  (give the dyanamic id i.e orderid)----------- -->
-        <% pendingOrders.forEach((order) => {%>
+        <% activeOrders.forEach((order) => {%>
         <div id="<%= order._id %>" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-warning">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -127,8 +132,7 @@
                       From
                       <address> 
                         <strong><%= order.pharmacy_id.pharma_name %></strong><br>  
-                        Kormangala, 1st Block <br>  
-                        Bangalore <br>  
+                        <%= order.pharmacy_id.pharma_address %><br>
                         Phone: 8639133577 <br>
                         Email: murali@gmail.com 
                       </address>
@@ -137,7 +141,7 @@
                     <div class="col-sm-6">  
                       <b>Invoice #058855</b>
                       <br>
-                      <b>Order ID:</b> <%= order._id %> <br>
+                      <b>Order ID:</b> <%= order._id %>
                       <b>Order Date:</b><%= moment(order.created_at).format('ddd, MMMM Do YYYY') %><br>
                   </div>
                   </div>
@@ -154,21 +158,13 @@
                           </tr>
                         </thead>
                         <tbody>
+                        <% order.order_items.forEach((order_item) => { %>
                           <tr>
-                            <td>Crocin</td>
-                            <td>10</td>
-                            <td>Rs. 65</td>
+                            <td><%= order_item.medicento_name %></td>
+                            <td><%= order_item.quantity %></td>
+                            <td>Rs. <%= order_item.total_amount %></td>
                           </tr>
-                          <tr>
-                            <td>Paracetmol</td>
-                            <td>6</td>
-                            <td>Rs. 125</td>
-                          </tr>
-                          <tr>
-                            <td>Diclogen</td>
-                            <td>4</td>
-                            <td>Rs. 180</td>
-                          </tr>
+                        <% }) %>
                         </tbody>
                       </table>
                     </div>
@@ -350,6 +346,14 @@
     <script src="assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
     <script src="assets/js/main.js" type="text/javascript"></script>
     <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/dataTables.buttons.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/buttons.flash.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/buttons.print.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/buttons.colVis.js" type="text/javascript"></script>
+    <script src="assets/lib/datatables/plugins/buttons/js/buttons.bootstrap.js" type="text/javascript"></script>
+    <script src="assets/js/app-tables-datatables.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-flot/jquery.flot.pie.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-flot/jquery.flot.resize.js" type="text/javascript"></script>
@@ -363,6 +367,7 @@
       $(document).ready(function(){
         //initialize the javascript
         App.init();
+        App.dataTables();
         App.dashboard();
       });
 

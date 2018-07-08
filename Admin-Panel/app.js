@@ -28,6 +28,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use('/assets', express.static('assets'));
@@ -39,7 +40,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/history', isLoggedIn , (req, res, next) => {
-    Order.find({}).populate('pharmacy_id').exec((err, orders) => {
+    Order.find({}).populate('pharmacy_id').populate('order_items').exec((err, orders) => {
         res.render('history', {orders: orders});
     });
     });
@@ -120,8 +121,8 @@ app.use('/', (req, res, next) => {
         orders = orders.slice(-6);
         User.count({}, (err, c) => {
             Order.count({ status: 'completed' }, (err, com) => {
-                Order.find({ status: 'active' }).populate('pharmacy_id').exec((err, pendingOrders) => {
-                    res.render('index', { count: c, orders, pendingOrders, order_completed: com, order_pending: pendingOrders.length});
+                Order.find({ status: 'active' }).populate('pharmacy_id').populate('order_items').exec((err, activeOrders) => {
+                    res.render('index', { count: c, orders, activeOrders, order_completed: com, order_active: activeOrders.length});
                 });
             });
         });
