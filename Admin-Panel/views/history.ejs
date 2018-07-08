@@ -54,10 +54,9 @@
                     </thead>
                     <tbody>
 					<% orders.forEach(function(order, i) { %>
-                      <tr>
+                      <tr  style="cursor: pointer;" data-toggle="modal" data-target="#<%= order._id %>">
                           <td><%= i %></td>
-                          <td>
-                            <span style="cursor: pointer;" data-toggle="modal" data-target="#<%= order._id %>" class="text-primary">
+                          <td class="text-primary">
                                 <%= order.pharmacy_id.pharma_name %>
                             </span>
                           </td>
@@ -99,8 +98,7 @@
                       From
                       <address> 
                           <strong><%= order.pharmacy_id.pharma_name %></strong><br>    
-                        <%= order.pharmacy_id.pharma_address %> <br>  
-                        Bangalore <br>  
+                        <%= order.pharmacy_id.pharma_address %> <br>    
                         Phone: 8639133577 <br>
                         Email: murali@gmail.com 
                       </address>
