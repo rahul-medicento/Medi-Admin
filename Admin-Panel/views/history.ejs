@@ -66,7 +66,7 @@
                     </thead>
                     <tbody>
 					<% orders.forEach(function(order, i) { %>
-                      <tr  style="cursor: pointer;" data-toggle="modal" data-target="#<%= order._id %>">
+                      <tr  style="cursor: pointer;" data-toggle="modal" data-target="#id<%= order._id %>">
                           <td><%= i %></td>
                           <td class="text-primary">
                                 <%= order.pharmacy_id.pharma_name %>
@@ -94,7 +94,7 @@
         <!-- table ends -->
         <!-- Invoice popup screen  (give the dyanamic id)----------- -->
         <% orders.forEach( (order, i) => { %>
-        <div id="<%= order._id %>" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-primary">
+        <div id="id<%= order._id %>" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-primary">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
