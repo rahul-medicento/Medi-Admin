@@ -31,7 +31,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-app.use('/assets', express.static('assets'));
+
+app.use(express.static(__dirname + '/public'))
 app.locals.moment = moment;
 
 app.use((req, res, next) => {
@@ -115,7 +116,28 @@ app.get('/forgot-password', (req, res, next) => {
     res.render('pages-forgot-password');
 });
 
-app.use('/', (req, res, next) => {
+
+// -------- Dashboards - routes ---------------------- 
+
+app.get('/sales_dashboard', isLoggedIn, (req, res) => {
+    res.render('sales_dashboard');
+});
+
+app.get('/area_dashboard', isLoggedIn, (req, res) => {
+    res.render('area_dashboard');
+});
+
+app.get('/delivery_dashboard', isLoggedIn, (req, res) => {
+    res.render('delivery_index');
+});
+
+app.get('/pharmacy_dashboard', isLoggedIn, (req, res) => {
+    res.render('pharmacy_dashboard');
+});
+
+//----------------index - route ---------------------
+
+app.get('/', (req, res, next) => {
     orders = [];
     Order.find({}).populate('pharmacy_id').exec((err, orders) => {
         orders = orders.slice(-6);
@@ -135,5 +157,9 @@ function isLoggedIn(req, res, next) {
     }
     res.redirect('/login');
 };
+
+
+
+
 
 module.exports = app;

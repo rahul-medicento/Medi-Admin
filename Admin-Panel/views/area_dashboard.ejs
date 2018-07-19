@@ -1,0 +1,402 @@
+<% include header.ejs %>
+<!-- left sidebar -->
+<div class="be-left-sidebar">
+        <div class="left-sidebar-wrapper"><a href="#" class="left-sidebar-toggle">Orders</a>
+          <div class="left-sidebar-spacer">
+            <div class="left-sidebar-scroll">
+              <div class="left-sidebar-content">
+                <ul class="sidebar-elements">
+                  <li class="divider">Menu</li>
+                    <li ><a href="index.html"><i class="icon mdi mdi-home"></i><span>Dash Board</span></a>
+                    </li>
+                    <li><a href="orders.html"><i class="icon mdi mdi-collection-plus"></i><span>Orders</span></a>
+                    </li>
+                     <li><a href="history.html"><i class="icon mdi mdi-time-restore"></i><span>History</span></a>
+                     </li>
+                    <li><a href="inventory.html"><i class="icon mdi mdi-local-grocery-store"></i><span>Inventory</span></a>
+                     </li>
+                     <li class="parent"><a href=""><i class="icon mdi mdi-accounts-add"></i><span>Add Members</span></a>
+                       <ul class="sub-menu"> 
+                         <li><a href="#">Add Retailer</a>
+                         </li>
+                         <li><a href='#'>Add Distrbutor</a>
+                         </li>
+                         <li><a href="#">Add Sales Person</a>
+                         </li>
+                       </ul>  
+                     </li>
+                     <li class="parent"><a href=""><i class="icon mdi mdi-chart"></i><span>Charts</span></a>
+                        <ul class="sub-menu"> 
+                          <li><a href="/sales_dashboard">Monthly-sales</a>
+                          </li>
+                          <li class="active"><a href="/area_dashboard">Area-sales</a>
+                          </li>
+                          <li><a href='pharmacy_dashboard'>pharmacies</a>
+                          </li>
+                          <li><a href="delivery_dashboard">deliveries</a>
+                          </li>
+                        </ul>  
+                      </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+       </div>   
+    </div>
+    
+    <div class="be-content">
+        <div class="main-content container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div id="title" class="title"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <table id="infoTable"   class="table table-borderless">
+                                    <tr>
+                                        <td>Total Pharmacies</td>
+                                        <td>Rs. <span id="pharmacy_count"></span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amount Collected :</td>
+                                        <td>Rs. <span id="amount_collected"></span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Balance Amount :</td>
+                                        <td>Rs. <span id="amount_balance"></span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reurns Amount</td>
+                                        <td>Rs. <span id="amount_returns"></span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Orders</td>
+                                        <td id="orders"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="map-widget">
+                                    <div id="map" style="width: 100%; height: 40vh;"></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div id="chartTitle" class="title"> </div>
+                        </div>
+                        <div class="panel-body">
+                            <div id="chart_div"></div>
+                        </div>
+                    </div>       
+                </div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+        
+        
+    const pharma1 = {
+        name: 'pharma1',
+        sales: {
+            paid: 15000,
+            balance: 8000,
+            returns: 4000
+        },
+        medicines: {
+            med1: 4000,
+            med2: 5000,
+            med3: 6500,
+            med4: 3000,
+            med5: 2250
+        },
+        area: 1,
+        orders: 15
+    } ;
+    
+    const pharma2 = {
+        name: 'pharma2',
+        sales: {
+            paid: 12000,
+            balance: 6500,
+            returns: 3500
+        },
+        medicines: {
+            med1: 7000,
+            med2: 2000,
+            med3: 6500,
+            med4: 3000,
+            med5: 2250
+        },
+        area: 1,
+        orders: 10
+    } ;
+    
+    const pharma3 = {
+        name: 'pharma3',
+        sales: {
+            paid: 14000,
+            balance: 6000,
+            returns: 2000
+        },
+        medicines: {
+            med1: 3000,
+            med2: 8000,
+            med3: 4500,
+            med4: 3000,
+            med5: 2250
+        },
+        area: 2,
+        orders: 14
+    } ;
+    
+    const pharma4 = {
+        name: 'pharma4',
+        sales: {
+            paid: 10000,
+            balance: 3500,
+            returns: 2500
+        },
+        medicines: {
+            med1: 6000,
+            med2: 3500,
+            med3: 4500,
+            med4: 6500,
+            med5: 4250
+        },
+        area: 2,
+        orders: 8
+    };
+    const pharma5 = {
+        name: 'pharma5',
+        sales: {
+            paid: 8000,
+            balance: 4000,
+            returns: 2000
+        },
+        medicines: {
+            med1: 4000,
+            med2: 5000,
+            med3: 2500,
+            med4: 6000,
+            med5: 5250
+        },
+        area: 3,
+        orders: 11
+    } ;
+    
+    const pharma6 = {
+        name: 'pharma6',
+        sales: {
+            paid: 8500,
+            balance: 2500,
+            returns: 3500
+        },
+        medicines: {
+            med1: 8500,
+            med2: 2500,
+            med3: 2600,
+            med4: 5200,
+            med5: 1250
+        },
+        area: 3,
+        orders: 15
+    }
+    
+    const pharma7 = {
+        name: 'pharma7',
+        sales: {
+            paid: 8500,
+            balance: 2500,
+            returns: 3500
+        },
+        medicines: {
+            med1: 8500,
+            med2: 2500,
+            med3: 2600,
+            med4: 5200,
+            med5: 1250
+        },
+        area: 2,
+        orders: 15
+    }
+    const pharma8 = {
+        name: 'pharma8',
+        sales: {
+            paid: 8000,
+            balance: 4000,
+            returns: 2000
+        },
+        medicines: {
+            med1: 4000,
+            med2: 5000,
+            med3: 2500,
+            med4: 6000,
+            med5: 5250
+        },
+        area: 1,
+        orders: 11
+    } ; 
+        
+    const pharmaData = [pharma1, pharma2, pharma3, pharma4, pharma5, pharma6, pharma7, pharma8];   
+    // -----------------    dual axis bar and line graph -------------------  
+    var options = {
+      title : 'Area wise Sales',
+      vAxes: {
+            // Adds titles to each axis.
+            0: {title: 'sales'},
+            1: {title: 'orders'}
+          },
+      hAxis: {title: 'Pharmacies'},
+      seriesType: 'bars',
+      series: {
+          3: {type: 'line', targetAxisIndex: 1}
+      },
+      animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'inAndOut'
+      },
+      colors:['#0e501e','#a02e0c','#e3690f','#0a0a7c']  
+    };
+    
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawVisualization);
+
+    // creating the data array required for the chart
+    function fetchData (pharmaData) {
+        var data = [['Pharmacy', 'Paid Amount', 'Balance Amount', 'Returns', 'Orders']] ;
+        var amount_collected = amount_balance = amount_returns = orders = 0;
+        var pharmacy_count = pharmaData.length; 
+        pharmaData.forEach((pharma) => {
+            details = [pharma.name, pharma.sales.paid, pharma.sales.balance, pharma.sales.returns, pharma.orders];
+            amount_collected += pharma.sales.paid;
+            amount_balance += pharma.sales.balance;
+            amount_returns += pharma.sales.returns;
+            orders += pharma.orders;
+            data.push(details);
+        });
+        const tableData = {
+            amount_collected,
+            amount_balance,
+            amount_returns,
+            orders,
+            pharmacy_count
+        }
+        return {data, tableData}
+    }
+    // changing the contents of table
+    function changeTable (name, tableData) {
+        $('#amount_balance').text(tableData.amount_balance);
+        $('#amount_collected').text(tableData.amount_collected);
+        $('#amount_returns').text(tableData.amount_returns);
+        $('#orders').text(tableData.orders);
+        $('#pharmacy_count').text(tableData.pharmacy_count);
+        $('#title').text(name);
+        $('#chartTitle').text(name);
+    }
+    // on loading page this will rendered
+    function drawVisualization() {
+        var {data, tableData} = fetchData(pharmaData); 
+        data = google.visualization.arrayToDataTable(data);
+        chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        changeTable("Total area Info", tableData);
+    }   
+
+    // to render the page with different filtered data
+    function renderData (area) {
+        if (area) {
+            var filteredData = pharmaData.filter((pharma) => {
+                return pharma.area == area
+            });
+        }else{
+            var filteredData = pharmaData;
+        }
+        var {data, tableData} = fetchData(filteredData);
+        data = google.visualization.arrayToDataTable(data);
+        chart.draw(data, options);
+        changeTable(`Area${area} Info`, tableData);
+    };    
+        
+        
+        
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: {lat: 12.972442, lng: 77.580643}
+        });
+
+        var kmlLayer = new google.maps.KmlLayer({
+          url: 'https://psriram1997.github.io/bangalore-area/Bangalore.kml',
+          suppressInfoWindows: true,
+          map: map
+        });
+
+        kmlLayer.addListener('click', function(kmlEvent) {
+          drawVisualization();
+        });
+          
+        var Area1 = new google.maps.KmlLayer({
+          url: 'https://psriram1997.github.io/bangalore-area/Area1.kml',
+          suppressInfoWindows: true,
+          map: map
+        });
+
+        Area1.addListener('click', function(kmlEvent) {
+        //   alert('area 1 clicked'); 
+          renderData(1); 
+        });  
+        
+          var Area2 = new google.maps.KmlLayer({
+          url: 'https://psriram1997.github.io/bangalore-area/Area2.kml',
+          suppressInfoWindows: true,
+          map: map
+        });
+
+        Area2.addListener('click', function(kmlEvent) {
+        //   alert('area 2 clicked'); 
+          renderData(2);     
+        });
+          
+        var Area3 = new google.maps.KmlLayer({
+          url: 'https://psriram1997.github.io/bangalore-area/Area3.kml',
+          suppressInfoWindows: true,
+          map: map
+        });
+
+        Area3.addListener('click', function(kmlEvent) {
+        //   alert('area 3 clicked');
+          renderData(3);
+        });  
+          
+          
+      }
+    //   renderData(0);
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrBz_8OHgziYwkt3eQeOg_8I_5B6GdoaI&callback=initMap">
+    </script>
+    <script src="assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+        <script src="assets/js/main.js" type="text/javascript"></script>
+        <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+              //initialize the javascript
+              App.init();
+              
+            });
+      
+        </script>
+  </body>
+</html>
