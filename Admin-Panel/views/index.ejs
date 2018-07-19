@@ -117,7 +117,7 @@
                         <td>Rs. <%= order.grand_total %></td>
                         <td><%=  moment(order.created_at).format('ddd, MMMM Do YYYY, h:mm:ss a') %></td>
                         <td class="text-danger" style="cursor: pointer;">
-                          <span data-toggle="modal" data-target="#<%= order._id%>">show details </span></td>
+                          <span data-toggle="modal" data-target="#o<%= order._id%>">show details </span></td>
                       </tr>
                       <% })%>
                     </tbody>
@@ -128,7 +128,7 @@
         </div>
         <!---------------- Delivery Details popup screen  (give the dyanamic id i.e orderid)----------- -->
         <% activeOrders.forEach((order) => {%>
-        <div id="<%= order._id %>" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-warning">
+        <div id="o<%= order._id %>" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-warning">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
