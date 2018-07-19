@@ -49,8 +49,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div id="title" class="title"></div>
+                        <div class="panel-heading"> 
+                            <select name="area" id="mapArea" class="pull-right xs-ml-10">
+                                    <option value=0>Bangalore</option>
+                                    <option value=1>area1</option>
+                                    <option value=2>area2</option>
+                                    <option value=3>area3</option>
+                            </select>
+                            <span class="pull-right">Select an area : </span> 
+                            <div id="title" class="title"></div>   
                         </div>
                         <div class="panel-body">
                             <div class="col-md-6">
@@ -102,6 +109,8 @@
         </div>
     </div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="assets/js/area.js"></script>
 <script>
         
         
@@ -328,75 +337,73 @@
         changeTable(`Area${area} Info`, tableData);
     };    
         
-        
-        
+  
+     
+    
+    // ============Map initializing ==============
+    var map;
+    var areaPolygon;
       function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+          map = new google.maps.Map(document.getElementById('map'), {
           zoom: 10,
           center: {lat: 12.972442, lng: 77.580643}
         });
 
-        var kmlLayer = new google.maps.KmlLayer({
-          url: 'https://psriram1997.github.io/bangalore-area/Bangalore.kml',
-          suppressInfoWindows: true,
-          map: map
+   
+        var areaCoords = areas[0].coords.map((coords) => {
+            return {lat: coords[1], lng: coords[0]}
+        }) 
+            areaPolygon = new google.maps.Polygon({
+            paths: areaCoords,
+            strokeColor: '#0000FF',
+            strokeOpacity: 0.8,
+            strokeWeight: 3,
+            fillColor: '#0000FF',
+            fillOpacity: 0.35
         });
-
-        kmlLayer.addListener('click', function(kmlEvent) {
-          drawVisualization();
-        });
-          
-        var Area1 = new google.maps.KmlLayer({
-          url: 'https://psriram1997.github.io/bangalore-area/Area1.kml',
-          suppressInfoWindows: true,
-          map: map
-        });
-
-        Area1.addListener('click', function(kmlEvent) {
-        //   alert('area 1 clicked'); 
-          renderData(1); 
-        });  
-        
-          var Area2 = new google.maps.KmlLayer({
-          url: 'https://psriram1997.github.io/bangalore-area/Area2.kml',
-          suppressInfoWindows: true,
-          map: map
-        });
-
-        Area2.addListener('click', function(kmlEvent) {
-        //   alert('area 2 clicked'); 
-          renderData(2);     
-        });
-          
-        var Area3 = new google.maps.KmlLayer({
-          url: 'https://psriram1997.github.io/bangalore-area/Area3.kml',
-          suppressInfoWindows: true,
-          map: map
-        });
-
-        Area3.addListener('click', function(kmlEvent) {
-        //   alert('area 3 clicked');
-          renderData(3);
-        });  
-          
-          
+        areaPolygon.setMap(map);
       }
-    //   renderData(0);
+
+      //==========selecting events===========
+      $('#mapArea').on('change', (e) => {
+          const areaIndex = e.target.value;
+          const areaCoords = areas[areaIndex].coords.map((coords) => {
+            return {lat: coords[1], lng: coords[0]}
+          });
+          console.log(areaCoords);
+          areaPolygon.setMap(null);
+          areaPolygon = new google.maps.Polygon({
+            paths: areaCoords,
+            strokeColor: '#0000FF',
+            strokeOpacity: 0.8,
+            strokeWeight: 3,
+            fillColor: '#0000FF',
+            fillOpacity: 0.35
+        });
+        areaPolygon.setMap(map);
+        map.setCenter(areas[areaIndex].center);
+        if(areaIndex == 0){
+            map.setZoom(10);
+            drawVisualization()
+        }else{
+            map.setZoom(10.5);
+            renderData(areaIndex);
+        } 
+      });
+
+    
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrBz_8OHgziYwkt3eQeOg_8I_5B6GdoaI&callback=initMap">
     </script>
-    <script src="assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
-        <script src="assets/js/main.js" type="text/javascript"></script>
-        <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-              //initialize the javascript
-              App.init();
-              
-            });
-      
-        </script>
+    <script src="assets/js/main.js" type="text/javascript"></script>
+    <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //initialize the javascript
+             App.init();
+        }); 
+    </script>
   </body>
 </html>
