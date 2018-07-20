@@ -135,6 +135,38 @@ app.get('/pharmacy_dashboard', isLoggedIn, (req, res) => {
     res.render('pharmacy_dashboard');
 });
 
+// -------------pharmacy route-----------
+app.get('/pharmacy', (req, res) => {
+    Order.find({}, (err, orders) => {
+        if(err){
+            return console.log(err);
+        }
+        Pharmacy.find({}, (err, pharmacies) => {
+            if(err){
+                return console.log(err)
+            }
+            var pharmacy_list = []
+            pharmacies.forEach((pharmacy) => {
+                var name = pharmacy.pharma_name;
+                var id = pharmacy._id;
+                var totalAmount = paidAmount = balanceAmount = returnAmount = 0;
+
+                filteredOrders = orders.filter((order) => {
+                    return id.equals(order.pharmacy_id)
+                });
+                // console.log(filteredOrders)
+                var totalOrders = filteredOrders.length;
+                filteredOrders.forEach((order) => {
+                    totalAmount += +order.grand_total;
+                });
+                pharmacy_list.push({name, id, totalAmount, paidAmount, balanceAmount, returnAmount, totalOrders})
+            });
+            // console.log(pharmacy_list);
+            res.render('pharmacy_list', {pharmacy_list});
+        });
+    })
+});
+
 //----------------index - route ---------------------
 
 app.get('/', (req, res, next) => {
