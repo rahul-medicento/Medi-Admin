@@ -136,7 +136,8 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
-                  <h3 class="modal-title">Medicento</h3>
+	    <div id="print<%= order._id %>">
+		  <h3 class="modal-title">Medicento</h3>
                 </div>
                 <div class="modal-body">
                   <section>
@@ -241,12 +242,13 @@
                   </div> 
                 </section>
                 </div>
+		</div>
                 <div class="modal-footer">
                     <div class="row">
                   <!-- --------modal footer print -------- -->                
                   <div class="col-md-6">
                     <br>
-                    <button id ="btnPrint" onclick="printDiv('o<%= order._id %>')" class="btn btn-lg btn-default text-primary xs-ml-20 xs-mr-50">
+                    <button id ="btnPrint" onclick="printDiv('print<%= order._id %>')" class="btn btn-lg btn-default text-primary xs-ml-20 xs-mr-50">
                       <span class="mdi lead xs-mb-0 mdi-print xs-mr-20"></span>Print</button>
                   </div>
                   <div class="col-md-6">
