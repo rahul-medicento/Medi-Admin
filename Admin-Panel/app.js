@@ -31,7 +31,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-app.use('/assets', express.static('assets'));
+
+app.use(express.static(__dirname + '/public'))
 app.locals.moment = moment;
 
 app.use((req, res, next) => {
@@ -114,7 +115,60 @@ app.get('/forgot-password', (req, res, next) => {
     res.render('pages-forgot-password');
 });
 
-app.use('/', (req, res, next) => {
+
+// -------- Dashboards - routes ---------------------- 
+
+app.get('/sales_dashboard', isLoggedIn, (req, res) => {
+    res.render('sales_dashboard');
+});
+
+app.get('/area_dashboard', isLoggedIn, (req, res) => {
+    res.render('area_dashboard');
+});
+
+app.get('/delivery_dashboard', isLoggedIn, (req, res) => {
+    res.render('delivery_index');
+});
+
+app.get('/pharmacy_dashboard', isLoggedIn, (req, res) => {
+    res.render('pharmacy_dashboard');
+});
+
+// -------------pharmacy route-----------
+app.get('/pharmacy', (req, res) => {
+    Order.find({}, (err, orders) => {
+        if(err){
+            return console.log(err);
+        }
+        Pharmacy.find({}, (err, pharmacies) => {
+            if(err){
+                return console.log(err)
+            }
+            var pharmacy_list = []
+            pharmacies.forEach((pharmacy) => {
+                var name = pharmacy.pharma_name;
+                var id = pharmacy._id;
+                var totalAmount = paidAmount = balanceAmount = returnAmount = 0;
+
+                filteredOrders = orders.filter((order) => {
+                    return id.equals(order.pharmacy_id)
+                });
+                // console.log(filteredOrders)
+                var totalOrders = filteredOrders.length;
+                filteredOrders.forEach((order) => {
+                    totalAmount += +order.grand_total;
+                });
+                pharmacy_list.push({name, id, totalAmount, paidAmount, balanceAmount, returnAmount, totalOrders})
+            });
+            // console.log(pharmacy_list);
+            res.render('pharmacy_list', {pharmacy_list});
+        });
+    })
+});
+
+//----------------index - route ---------------------
+
+app.get('/', (req, res, next) => {
     orders = [];
     Order.find({}).populate('pharmacy_id').exec((err, orders) => {
         orders = orders.slice(-6);
@@ -134,5 +188,9 @@ function isLoggedIn(req, res, next) {
     }
     res.redirect('/login');
 };
+
+
+
+
 
 module.exports = app;

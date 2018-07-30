@@ -1,0 +1,266 @@
+<% include header.ejs %>
+
+<!-- left sidebar -->
+<div class="be-left-sidebar">
+    <div class="left-sidebar-wrapper"><a href="#" class="left-sidebar-toggle">Orders</a>
+      <div class="left-sidebar-spacer">
+        <div class="left-sidebar-scroll">
+          <div class="left-sidebar-content">
+            <ul class="sidebar-elements">
+              <li class="divider">Menu</li>
+                <li ><a href="/"><i class="icon mdi mdi-home"></i><span>Dash Board</span></a>
+                </li>
+                <li><a href="/orders"><i class="icon mdi mdi-collection-plus"></i><span>Orders</span></a>
+                </li>
+                 <li><a href="/history"><i class="icon mdi mdi-time-restore"></i><span>History</span></a>
+                 </li>
+                <li><a href="/inventory"><i class="icon mdi mdi-local-grocery-store"></i><span>Inventory</span></a>
+                 </li>
+                 <li class="parent"><a href=""><i class="icon mdi mdi-accounts-add"></i><span>Add Members</span></a>
+                   <ul class="sub-menu"> 
+                     <li><a href="/addRetailer">Add Retailer</a>
+                     </li>
+                     <li><a href='/addDistributor'>Add Distrbutor</a>
+                     </li>
+                     <li><a href="/addSalesPerson">Add Sales Person</a>
+                     </li>
+                   </ul>  
+                 </li>
+                 <li class="parent"><a href=""><i class="icon mdi mdi-chart"></i><span>Charts</span></a>
+                    <ul class="sub-menu"> 
+                      <li class="active"><a href="/sales_dashboard">Monthly-sales</a>
+                      </li>
+                      <li><a href="/area_dashboard">Area-sales</a>
+                      </li>
+                      <li><a href='/pharmacy_dashboard'>pharmacies</a>
+                      </li>
+                      <li><a href="/delivery_dashboard">deliveries</a>
+                      </li>
+                    </ul>  
+                  </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+   </div>   
+</div>
+
+<div class="be-content">
+  <div class="main-content container-fluid">
+    <!-- -----------row ---------------- -->
+    <div class="row">
+      <!-- --------------map----------------- -->
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="title">Sales State Wise</div>
+          </div>
+          <div class="panel-body">
+            <div class="col-md-6">
+                <div id="geochart-colors"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="piechart"></div>
+                <div id="piechart-top"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="title">Monthly Wise sales</div>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+                      <div id="chart_div"></div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>      
+  </div>
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+  google.charts.load('current', {
+        'packages':['geochart'],
+        // Note: you will need to get a mapsApiKey for your project.
+        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+        'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+            ['State',   'sales'],
+            ['Uttar Pradesh', 19581477],
+            ['Maharashtra', 11272972],
+            ['Bihar', 103804637],
+            ['West Bengal', 91347736],
+            ['Madhya Pradesh', 72597565],
+            ['Tamil Nadu', 72138958],
+            ['Rajasthan', 68621012],
+            ['Karnataka', 61130704],
+            ['Gujarat', 60383628],
+            ['Andhra Pradesh', 49386799],
+            ['Odisha', 41947358],
+            ['Telangana', 35286757],
+            ['Kerala', 33387677],
+            ['Jharkhand', 32966238],
+            ['Assam', 31169272],
+            ['Punjab', 27704236],
+            ['Chhattisgarh', 25540196],
+            ['Haryana', 25353081],
+            ['Jammu and Kashmir', 12548926],
+            ['Uttarakhand', 10116752],
+            ['Himachal Pradesh', 6856509],
+            ['Tripura', 3671032],
+            ['Meghalaya', 2964007],
+            ['Manipur', 2721756],
+            ['Nagaland', 1980602],
+            ['Goa', 1457723],
+            ['Arunachal Pradesh', 1382611],
+            ['Mizoram', 1091014],
+            ['Sikkim', 607688],
+            ['Delhi', 16753235],
+            ['Puducherry', 1244464],
+            ['Chandigarh', 1054686],
+            ['Andaman and Nicobar Islands', 379944],
+            ['Dadra and Nagar Haveli', 342853],
+            ['Daman and Diu', 242911],
+            ['Lakshadweep', 64429]
+        ]);
+
+        var options = {
+          region: 'IN', // Africa
+          colorAxis: {colors: ['#00853f', 'black', '#e31b23']},
+          backgroundColor: '#81d4fa',
+          datalessRegionColor: '#bfb5b8',
+          defaultColor: '#f5f5f5',
+          resolution: 'provinces'
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('geochart-colors'));
+        chart.draw(data, options);
+      };
+
+             
+// -------------------   pie chart for sales -----------------------------------
+google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Sale', 'Amount'],
+          ['Balance amount', 110000],
+          ['Paid amount', 200000],
+          ['returns',  100512],
+        ]);
+
+        var options = {
+          title: 'Sales',
+          is3D: true,
+          colors:['#f24410','#114489','#218114','#0a0a7c']
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+// -------------------   pie chart for Medicines -----------------------------------
+      google.charts.load('current', {'packages':['corechart']});
+       google.charts.setOnLoadCallback(drawChartTop);
+
+  function drawChartTop() {
+    var data = google.visualization.arrayToDataTable([
+      ['Product', 'Amount'],
+      ['DERMADEW SHAMPO', 896],
+      ['DERMADEW ALOE CREAM', 396],
+      ['HHACECLO PLUS TAB', 495],
+      ['DICLOGEL GEL', 891],
+      ['CROCIN', 255]
+    ]);
+
+    var options = {
+      title : 'Top 5 Saled Products',  
+      pieHole: 0.3,
+      is3D: true    
+        
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart-top'));
+
+    chart.draw(data, options);
+  }
+  
+    
+// -----------------    dual axis bar and line graph -------------------  
+google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+         ['Month',      'Paid Amount',      'Balance Amount',      'Returns', 'Orders'],
+         ['Jan',             99800,           45000,                 61400.6,     310],
+         ['Feb',             126800,          28800,                 68200,       420],
+         ['Mar',             80700,           39700,                 62300,       480],
+         ['Apr',             96800,           21500,                 60900.4,     560],
+         ['May',             99800,           45000,                 61400.6,     310],
+         ['Jun',             126800,          28800,                 68200,       420],
+         ['Jul',             80700,           39700,                 62300,       480],
+         ['Aug',             96800,           21500,                 60900.4,     560],
+         ['Sep',             99800,           45000,                 61400.6,     310],
+         ['Oct',             126800,          28800,                 68200,       420],
+         ['Nov',             80700,           39700,                 62300,       480],
+         ['Dec',             96800,           21500,                 60900.4,     560]   
+      ]);
+
+    var options = {
+      title : 'Monthly Sales',
+      vAxes: {
+            // Adds titles to each axis.
+            0: {title: 'sales'},
+            1: {title: 'orders'}
+          },
+      hAxis: {title: 'Month'},
+      seriesType: 'bars',
+      series: {
+          3: {type: 'line', targetAxisIndex: 1}
+      },
+      animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'out'
+      },
+      colors:['#0e501e','#a02e0c','#e3690f','#0a0a7c']
+         
+        
+    };
+          
+            
+
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }    
+
+
+</script>
+<script src="assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+    <script src="assets/js/main.js" type="text/javascript"></script>
+    <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+          //initialize the javascript
+          App.init();
+          
+        });
+  
+    </script>
+    </body>
+  </html>      

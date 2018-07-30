@@ -13,6 +13,8 @@
                        </li>
                       <li><a href="/inventory"><i class="icon mdi mdi-local-grocery-store"></i><span>Inventory</span></a>
                        </li>
+                       <li><a href="/pharmacy"><i class="icon mdi mdi-local-grocery-store"></i><span>Pharmacy</span></a>
+                       </li>
                        <li class="parent"><a href="#"><i class="icon mdi mdi-accounts-add"></i><span>Add Members</span></a>
                          <ul class="sub-menu"> 
                            <li><a href="/addRetailer">Add Retailer</a>
@@ -23,6 +25,18 @@
                            </li>
                          </ul>  
                        </li>
+                       <li class="parent"><a href=""><i class="icon mdi mdi-chart"></i><span>Charts</span></a>
+                        <ul class="sub-menu"> 
+                          <li><a href="/sales_dashboard">Monthly-sales</a>
+                          </li>
+                          <li><a href="/area_dashboard">Area-sales</a>
+                          </li>
+                          <li><a href='pharmacy_dashboard'>pharmacies</a>
+                          </li>
+                          <li><a href="delivery_dashboard">deliveries</a>
+                          </li>
+                        </ul>  
+                      </li>
                   </ul>
                 </div>
               </div>
@@ -105,7 +119,7 @@
                         <td>Rs. <%= order.grand_total %></td>
                         <td><%=  moment(order.created_at).format('ddd, MMMM Do YYYY, h:mm:ss a') %></td>
                         <td class="text-danger" style="cursor: pointer;">
-                          <span data-toggle="modal" data-target="#<%= order._id%>">show details </span></td>
+                          <span data-toggle="modal" data-target="#o<%= order._id%>">show details </span></td>
                       </tr>
                       <% })%>
                     </tbody>
@@ -116,12 +130,13 @@
         </div>
         <!---------------- Delivery Details popup screen  (give the dyanamic id i.e orderid)----------- -->
         <% activeOrders.forEach((order) => {%>
-        <div id="<%= order._id %>" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-warning">
+	
+        <div id="o<%= order._id %>" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-warning">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
-                  <h3 class="modal-title">Medicento</h3>
+		  <h3 class="modal-title">Medicento</h3>
                 </div>
                 <div class="modal-body">
                   <section>
@@ -231,7 +246,7 @@
                   <!-- --------modal footer print -------- -->                
                   <div class="col-md-6">
                     <br>
-                    <button class="btn btn-lg btn-default text-primary xs-ml-20 xs-mr-50">
+                    <button id ="btnPrint" onclick="printDiv('o<%= order._id %>')" class="btn btn-lg btn-default text-primary xs-ml-20 xs-mr-50">
                       <span class="mdi lead xs-mb-0 mdi-print xs-mr-20"></span>Print</button>
                   </div>
                   <div class="col-md-6">
@@ -247,6 +262,7 @@
               </div>
             </div>
           </div>
+	 
           <!-- ----------------popup screen ends here ------------------ -->
           <% })%>
   
@@ -370,7 +386,16 @@
         App.dataTables();
         App.dashboard();
       });
+      function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
 
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+	}
       function sparklines(){
 
       var color1 = App.color.primary;//blue
