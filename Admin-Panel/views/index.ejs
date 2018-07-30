@@ -391,7 +391,7 @@
         date = new Date();
         var printContents = document.getElementById(divName).innerHTML;
         var pdf = new jsPDF();
-        pdf.text(5, 5, document.getElementById(divName).innerHTML);
+        pdf.text(5, 5, document.getElementById(divName).innerText);
         pdf.save('Order - '+date.toLocaleDateString()+' '+date.toLocaleTimeString()+'.pdf');
       }
       function printDiv(divName) {
