@@ -44,7 +44,6 @@ app.get('/history', isLoggedIn , (req, res, next) => {
         res.render('history', {orders: orders});
     });
     });
-
 app.get('/inventory', isLoggedIn, (req, res, next) => {
     ProductAndMedi.find({}).populate('product_id').populate('inventory_product_id').exec((err, pros) => {
         res.render('inventory', {pros: pros});
