@@ -252,7 +252,7 @@
                   <div class="col-md-6">
                   <!-- ---------modal footer download -------------- -->
                     <p class="text-center text-bold">Download Details</p>
-                    <button class="btn  btn-default pull-right xs-ml-20 xs-mr-40 xs-pl-20 xs-pr-20"> 
+                    <button class="btn  btn-default pull-right xs-ml-20 xs-mr-40 xs-pl-20 xs-pr-20" onclick="download('o<%= order._id %>')"> 
                       <span  class="mdi mdi-download"></span> PDF</button>
                     <button class="btn btn-space btn-default pull-right xs-pl-20 xs-pr-20">
                       <span  class="mdi mdi-download"></span> CSV</button>
@@ -379,6 +379,7 @@
     <script src="assets/lib/countup/countUp.min.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
     <script src="assets/js/app-dashboard.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
     <script type="text/javascript">
       $(document).ready(function(){
         //initialize the javascript
@@ -386,16 +387,20 @@
         App.dataTables();
         App.dashboard();
       });
+     function download(divName) {
+        date = new Date();
+        var printContents = document.getElementById(divName).innerHTML;
+        var pdf = new jsPDF();
+        pdf.text(5, 5, document.getElementById(divName).innerHTML);
+        pdf.save('Order - '+date.toLocaleDateString()+' '+date.toLocaleTimeString()+'.pdf');
+      }
       function printDiv(divName) {
-     var printContents = document.getElementById(divName).innerHTML;
-     var originalContents = document.body.innerHTML;
-
-     document.body.innerHTML = printContents;
-
-     window.print();
-
-     document.body.innerHTML = originalContents;
-	}
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+      }
       function sparklines(){
 
       var color1 = App.color.primary;//blue
