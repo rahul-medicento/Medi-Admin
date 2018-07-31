@@ -167,6 +167,16 @@ app.get('/pharmacy', (req, res) => {
 });
 
 //----------------index - route ---------------------
+app.post('/changeS', (req, res, next) => {
+    Order.findOneAndUpdate({_id: req.body.order_id}, {$set:{state: req.body.state}}, {new: true}, (err, doc) => {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log(doc);
+        }
+        res.redirect('/');
+    })
+});
 
 app.get('/', (req, res, next) => {
     Order.find({}).populate('pharmacy_id').exec((err, orders) => {
@@ -186,6 +196,7 @@ app.get('/', (req, res, next) => {
     });
     });
 });
+
 
 app.post('/', (req, res, next) => {
     Order.findOneAndUpdate({_id: req.body.order_id}, {$set:{status: req.body.status}}, {new: true}, (err, doc) => {

@@ -12,7 +12,8 @@ var App = (function () {
     } );
 
     $("#table1").dataTable();
-
+    $("#tabled").dataTable();
+    $("#tablec").dataTable();
     //Remove search & paging dropdown
     $("#table2").dataTable({
       pageLength: 6,
