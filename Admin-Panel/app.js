@@ -169,9 +169,6 @@ app.get('/pharmacy', (req, res) => {
 //----------------index - route ---------------------
 
 app.get('/', (req, res, next) => {
-    orders = [];
-    orders_return = [];
-    orders_cancel = [];
     Order.find({}).populate('pharmacy_id').exec((err, orders) => {
         Order.find({ status: 'Canceled' }).populate('pharmacy_id').populate('order_items').exec((err, canceldOrders) => {
             Order.find({ status: 'Delivered' }).populate('pharmacy_id').populate('order_items').exec((err, deliverOrders) => {
