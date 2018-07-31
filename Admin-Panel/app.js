@@ -172,11 +172,9 @@ app.get('/', (req, res, next) => {
     Order.find({}).populate('pharmacy_id').exec((err, orders) => {
         Order.find({ status: 'Canceled' }).populate('pharmacy_id').populate('order_items').exec((err, canceldOrders) => {
             Order.find({ status: 'Delivered' }).populate('pharmacy_id').populate('order_items').exec((err, deliverOrders) => {
-                Order.find({ status: 'Completed' }).populate('pharmacy_id').populate('order_items').exec((err, completedOrders) => {
                 Order.find({ status: 'Active' }).populate('pharmacy_id').populate('order_items').exec((err, activeOrders) => {
                     res.render('index', { order_count: orders.length, 
-                        orders, activeOrders, completedOrders, canceldOrders,deliverOrders,
-                        order_completed: completedOrders.length, 
+                        orders, activeOrders, canceldOrders,deliverOrders,
                         order_delivered: deliverOrders.length,
                         order_active: activeOrders.length,
                         order_cancel: canceldOrders.length,
@@ -184,7 +182,6 @@ app.get('/', (req, res, next) => {
                         order_sales: 10
                     });
                 });
-            });
         });
     });
     });
