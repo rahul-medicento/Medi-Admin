@@ -170,15 +170,19 @@ app.get('/pharmacy', (req, res) => {
 
 app.get('/', (req, res, next) => {
     orders = [];
+    orders_return = [];
+    orders_cancel = [];
     Order.find({}).populate('pharmacy_id').exec((err, orders) => {
-        orders = orders.slice(-6);
-            Order.find({ status: 'Completed' }).populate('pharmacy_id').populate('order_items').exec((err, completedOrders) => {
+        Order.find({ status: 'Canceled' }).populate('pharmacy_id').populate('order_items').exec((err, canceldOrders) => {
+            Order.find({ status: 'Delivered' }).populate('pharmacy_id').populate('order_items').exec((err, deliverOrders) => {
+                Order.find({ status: 'Completed' }).populate('pharmacy_id').populate('order_items').exec((err, completedOrders) => {
                 Order.find({ status: 'Active' }).populate('pharmacy_id').populate('order_items').exec((err, activeOrders) => {
                     res.render('index', { order_count: orders.length, 
-                        orders, activeOrders, completedOrders,
+                        orders, activeOrders, completedOrders, canceldOrders,deliverOrders,
                         order_completed: completedOrders.length, 
+                        order_delivered: deliverOrders.length,
                         order_active: activeOrders.length,
-                        order_cancel: 0,
+                        order_cancel: canceldOrders.length,
                         order_returns: 0,
                         order_sales: 10
                     });
@@ -186,6 +190,8 @@ app.get('/', (req, res, next) => {
             });
         });
     });
+    });
+});
 
 app.post('/', (req, res, next) => {
     Order.findOneAndUpdate({_id: req.body.order_id}, {$set:{status: req.body.status}}, {new: true}, (err, doc) => {
