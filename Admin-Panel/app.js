@@ -182,7 +182,7 @@ app.post('/changeS', (req, res, next) => {
 app.get('/:id/mail', (req, res, next) => {
     Order.findOne({ _id:req.params.id}).populate('pharmacy_id').populate('order_items').exec()
     .then((doc) => {
-        message = '<h3>Pharmacy Name :'+ doc.pharmacy_id.pharma_name +'</h3><h4>Area Name : Kormangla</h4><h5>Medicine List : </h5>';
+        message = '<h3>From Admin Panel :</h3><h3>Pharmacy Name :'+ doc.pharmacy_id.pharma_name +'</h3><h4>Area Name : Kormangla</h4><h5>Medicine List : </h5>';
         message += '<table border="1"><tr><th>Medicine Name</th><th>Quantity</th><th>Cost</th></tr>';
         for(i =0;i<doc.order_items.length;i++) {
             message += '<tr><td>'+doc.order_items[i].medicento_name+'</td><td>'+doc.order_items[i].quantity+'</td><td>'+doc.order_items[i].total_amount+'</td></tr>'
@@ -194,7 +194,7 @@ app.get('/:id/mail', (req, res, next) => {
             }, from: 'giteshshastri123@outlook.com',
             to: 'giteshshastri96@gmail.com',
             cc: 'rohit@medicento.com',
-            subject: 'Order Has Been Placed By ' + doc.pharmacy_id.pharma_name + ' On ' + doc.created_at,
+            subject: 'From Admin Panel : Order Has Been Placed By ' + doc.pharmacy_id.pharma_name + ' On ' + doc.created_at,
             html: message + '</table><p>Billing Total : ' +doc.grand_total + '</p>',
         });
         nodeoutlook.sendEmail({
@@ -204,7 +204,7 @@ app.get('/:id/mail', (req, res, next) => {
             }, from: 'giteshshastri123@outlook.com',
             to: 'giteshshastri96@gmail.com',
             cc: 'arpandebasis@medicento.com',
-            subject: 'Order Has Been Placed By ' + doc.pharmacy_id.pharma_name + ' On ' + doc.created_at,
+            subject: 'From Admin Panel : Order Has Been Placed By ' + doc.pharmacy_id.pharma_name + ' On ' + doc.created_at,
             html: message + '</table><p>Billing Total : ' +doc.grand_total + '</p>',
         });
         console.log(message);
