@@ -192,18 +192,7 @@ app.get('/:id/mail', (req, res, next) => {
                 user: "giteshshastri123@outlook.com",
                 pass: "shastri@1"
             }, from: 'giteshshastri123@outlook.com',
-            to: 'giteshshastri96@gmail.com',
-            cc: 'rohit@medicento.com',
-            subject: 'From Admin Panel : Order Has Been Placed By ' + doc.pharmacy_id.pharma_name + ' On ' + doc.created_at,
-            html: message + '</table><p>Billing Total : ' +doc.grand_total + '</p>',
-        });
-        nodeoutlook.sendEmail({
-            auth: {
-                user: "giteshshastri123@outlook.com",
-                pass: "shastri@1"
-            }, from: 'giteshshastri123@outlook.com',
-            to: 'giteshshastri96@gmail.com',
-            cc: 'arpandebasis@medicento.com',
+            to: 'giteshshastri96@gmail.com, rohit@medicento.com, arpandebasis@medicento.com, giteshmedicento@gmail.com',
             subject: 'From Admin Panel : Order Has Been Placed By ' + doc.pharmacy_id.pharma_name + ' On ' + doc.created_at,
             html: message + '</table><p>Billing Total : ' +doc.grand_total + '</p>',
         });
