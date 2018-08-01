@@ -140,12 +140,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% activeOrders.forEach(function(order) { moment(order.created_at).add(5, 'h'); moment(order.created_at).add(30, 'm');%>
+                      <% activeOrders.forEach(function(order) { time = moment(order.created_at).add(5, 'h'); time1 = moment(time).add(30, 'm');%>
                       <tr>
                         <td  data-toggle="modal" data-target="#r<%= order._id %>" style="cursor: pointer;"><%= order._id %></td>
                         <td><%= order.pharmacy_id.pharma_name %></td>
                         <td>Rs. <%= order.grand_total %></td>
-                        <td><%= moment(order.created_at).format('LLLL') %></td>
+                        <td><%= moment(time1).format('LLLL') %></td>
                         <td class="text-danger" style="cursor: pointer;">
                           <span data-toggle="modal" data-target="#o<%= order._id%>">show details </span>
                         </td>
