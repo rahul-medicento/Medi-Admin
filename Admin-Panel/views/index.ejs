@@ -145,7 +145,7 @@
                         <td  data-toggle="modal" data-target="#r<%= order._id %>" style="cursor: pointer;"><%= order._id %></td>
                         <td><%= order.pharmacy_id.pharma_name %></td>
                         <td>Rs. <%= order.grand_total %></td>
-                        <td><%=  moment(order.created_at).format('ddd, MMMM Do YYYY, h:mm:ss a') %></td>
+                        <td><%=  moment(order.created_at).format('LT') %></td>
                         <td class="text-danger" style="cursor: pointer;">
                           <span data-toggle="modal" data-target="#o<%= order._id%>">show details </span>
                         </td>
