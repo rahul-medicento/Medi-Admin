@@ -178,6 +178,18 @@ app.post('/changeS', (req, res, next) => {
     })
 });
 
+app.post('/:id/delete', (req, res, next) => {
+    Order.findOne({ _id:req.params.id}).populate('pharmacy_id').populate('order_items').exec()
+    .then((doc) => {
+            doc.remove();
+            res.redirect('/');
+        })
+        .catch((err) => {
+            console.log(err);
+            res.redirect('/');
+        });
+});
+
 app.get('/', (req, res, next) => {
     Order.find({}).populate('pharmacy_id').exec((err, orders) => {
         Order.find({ status: 'Canceled' }).populate('pharmacy_id').populate('order_items').exec((err, canceldOrders) => {
