@@ -182,7 +182,6 @@ app.post('/changeS', (req, res, next) => {
 app.get('/:id/mail', (req, res, next) => {
     Order.findOne({ _id:req.params.id}).populate('pharmacy_id').populate('order_items').exec()
     .then((doc) => {
-        time = moment(order.created_at).add(5, 'h'); time1 = moment(time).add(30, 'm');
         message = '<h3>From Admin Panel :</h3><h3>Pharmacy Name :'+ doc.pharmacy_id.pharma_name +'</h3><h4>Area Name : Kormangla</h4><h5>Medicine List : </h5>';
         message += '<table border="1"><tr><th>Medicine Name</th><th>Quantity</th><th>Cost</th></tr>';
         for(i =0;i<doc.order_items.length;i++) {
@@ -194,7 +193,7 @@ app.get('/:id/mail', (req, res, next) => {
                 pass: "shastri@1"
             }, from: 'giteshshastri123@outlook.com', // arpandebasis@medicento.com, rohit@medicento.com, miniintl@rediffmail.com, 
             to: 'giteshshastri96@gmail.com, giteshmedicento@gmail.com, ',
-            subject: 'Order From Medicento On ' + moment(time1).format('LLLL'),
+            subject: 'Order From Medicento On ' + moment(order.created_at).format('LLLL'),
             html: message + '</table><p>Billing Total : ' +doc.grand_total + '</p>',
         });
         console.log(message);
