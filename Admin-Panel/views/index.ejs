@@ -168,7 +168,7 @@
             </div>
         </div>
         <!---------------- Delivery Details popup screen  (give the dyanamic id i.e orderid)----------- -->
-        <% activeOrders.forEach((order) => {%>
+        <% activeOrders.forEach((order) => { time = moment(order.created_at).add(5, 'h'); time1 = moment(time).add(30, 'm'); %>
         
           <div id="r<%= order._id %>" class="modal fade" role="dialog">
             <div class="modal-dialog"><div class="modal-content">
@@ -229,7 +229,7 @@
                       <br>
                       <b>Order ID:</b> <%= order._id %><br />
                       <b>Order State: </b><%= order.state %><br/>
-                      <b>Order Date:</b><%= moment(order.created_at).format('ddd, MMMM Do YYYY') %><br>
+                      <b>Order Date:</b><%= moment(time1).format('LLLL') %><br>
                   </div>
                   </div>
                   
@@ -264,7 +264,7 @@
                           <table class="table table-borderless">
                             <tr>
                               <td style="width:50%"><strong>Time of order :</strong></td>
-                              <td> <%= moment(order.created_at).format('ddd, MMMM') %>
+                              <td> <%= moment(time1).format('ddd, MMMM') %>
                                  <br>
                                  <%= moment(order.created_at).format('hh:mm a') %>
                                 </td>
@@ -356,12 +356,12 @@
                       <th style="width:20%;">State</th>
                     </tr>
                   </thead>
-        <% deliverOrders.forEach(function(order) { %>
+        <% deliverOrders.forEach(function(order) {  time = moment(order.created_at).add(5, 'h'); time1 = moment(time).add(30, 'm');%>
                   <tbody class="no-border-x">
                     <tr>
                       <td><%= order.pharmacy_id.pharma_name %></td>
                       <td class="number">Rs. <%= order.grand_total %></td>
-                      <td><%= moment(order.created_at).format('ddd, MMMM Do YYYY, h:mm:ss a') %></td>
+                      <td><%= moment(time).format('LLLL') %></td>
                       <td class="text-primary"><%= order.status %></td>
                     </tr>
           <% }); %>
@@ -387,12 +387,12 @@
                     <th style="width:20%;">State</th>
                   </tr>
                 </thead>
-      <% canceldOrders.forEach(function(order) { %>
+      <% canceldOrders.forEach(function(order) { time = moment(order.created_at).add(5, 'h'); time1 = moment(time).add(30, 'm'); %>
                 <tbody class="no-border-x">
                   <tr>
                     <td><%= order.pharmacy_id.pharma_name %></td>
                     <td class="number">Rs. <%= order.grand_total %></td>
-                    <td><%= moment(order.created_at).format('ddd, MMMM Do YYYY, h:mm:ss a') %></td>
+                    <td><%= moment(time).format('LLLL') %></td>
                     <td class="text-danger"><%= order.status %></td>
                   </tr>
         <% }); %>
