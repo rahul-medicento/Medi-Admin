@@ -192,8 +192,8 @@ app.get('/:id/mail', (req, res, next) => {
                 user: "giteshshastri123@outlook.com",
                 pass: "shastri@1"
             }, from: 'giteshshastri123@outlook.com',
-            to: 'giteshshastri96@gmail.com, rohit@medicento.com, arpandebasis@medicento.com, giteshmedicento@gmail.com',
-            subject: 'From Admin Panel : Order Has Been Placed By ' + doc.pharmacy_id.pharma_name + ' On ' + doc.created_at,
+            to: 'giteshshastri96@gmail.com, giteshmedicento@gmail.com',
+            subject: 'Order From Medicento On ' + moment(doc.created_at).format('LLLL'),
             html: message + '</table><p>Billing Total : ' +doc.grand_total + '</p>',
         });
         console.log(message);
