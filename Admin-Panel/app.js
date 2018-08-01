@@ -184,7 +184,7 @@ app.get('/:id/mail', (req, res, next) => {
     .then((doc) => {
         time = moment(doc.created_at).add(30, 'm');
         time1 = moment(time).add(5, 'h');
-        message = '<h3>From Admin Panel :</h3><h3>Pharmacy Name :'+ doc.pharmacy_id.pharma_name +'</h3><h4>Area Name : Kormangla</h4><h5>Medicine List : </h5>';
+        message = '<h3>From Admin Panel :</h3<h3>Pharmacy Name :'+ doc.pharmacy_id.pharma_name +'</h3><h4>Area Name : Kormangla</h4><h5>Medicine List : </h5>';
         message += '<table border="1"><tr><th>Medicine Name</th><th>Quantity</th><th>Cost</th></tr>';
         for(i =0;i<doc.order_items.length;i++) {
             message += '<tr><td>'+doc.order_items[i].medicento_name+'</td><td>'+doc.order_items[i].quantity+'</td><td>'+doc.order_items[i].total_amount+'</td></tr>'
