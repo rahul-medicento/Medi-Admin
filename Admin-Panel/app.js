@@ -193,8 +193,8 @@ app.get('/:id/mail', (req, res, next) => {
             auth: {
                 user: "giteshshastri123@outlook.com",
                 pass: "shastri@1"
-            }, from: 'giteshshastri123@outlook.com', //  miniintl@rediffmail.com, 
-            to: 'giteshshastri96@gmail.com, arpandebasis@medicento.com, rohit@medicento.com, giteshmedicento@gmail.com ',
+            }, from: 'giteshshastri123@outlook.com', //  
+            to: 'giteshshastri96@gmail.com, arpandebasis@medicento.com, rohit@medicento.com, miniintl@rediffmail.com, giteshmedicento@gmail.com ',
             subject: 'Order From Medicento On ' + moment(time1).format('LLLL'),
             html: message + '</table><p>Billing Total : ' +doc.grand_total + '</p>',
         });
